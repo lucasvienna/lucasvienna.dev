@@ -1,0 +1,38 @@
+# Site settings
+title: Lucas Vienna
+subtitle: Hochschule Karlsruhe | IIB | 2022
+description: >- # this means to ignore newlines until "baseurl:"
+  My development blog. This is where I talk about code, tech, my projects and
+  anything related to my professional life.
+
+  You'll see posts about tools, languages, frameworks, apps, websites and more.
+  Mostly I'll talk about my current project, the tooling I'm using and how/why
+  I'm doing things this way or that.
+
+# Personal Info
+owner: Lucas Vienna
+email: dev@lucasvienna.dev
+url: "https://lucasvienna.dev"
+baseurl: ""
+
+# Blogging Defaults
+author: Lucas Vienna
+
+# Social References
+twitter:
+  handle: Avyiel7
+  url: https://twitter.com/avyiel7
+github:
+  username: Avyiel
+  url: https://github.com/Avyiel
+linkedin:
+  username: lucasvienna
+  url: https://linkedin.com/in/lucasvienna
+
+# Build settings
+markdown: kramdown
+compress_html:
+  blanklines: true
+  comments: ["<!-- ", " -->"]
+  ignore:
+    envs: [development] # don't compress during development
