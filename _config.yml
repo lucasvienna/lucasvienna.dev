@@ -29,6 +29,10 @@ linkedin:
   username: lucasvienna
   url: https://linkedin.com/in/lucasvienna
 
+# Display settings
+show_github: false
+show_downloads: false
+
 # Build settings
 markdown: kramdown
 compress_html:

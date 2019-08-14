@@ -1,0 +1,74 @@
+<header class="site-header" role="banner">
+  {%- if page.layout == 'home' -%}
+
+  <div class="jumbotron jumbotron-fluid header header-home">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 mb-3 mb-md-0">
+          <!-- TODO: vertically center align this -->
+          {% comment %} <img id="profile-pic" src="{{ site.baseurl }}/assets/images/me_700px_square.jpg"> {% endcomment %}
+          <img id="profile" src="https://placeimg.com/700/700/people/grayscale">
+        </div>
+        <div class="col-12 col-md-8 col-lg-9">
+          <h1>{{ site.title }}</h1>
+          <h2>{{ site.subtitle }}</h2>
+
+          <!-- Action Buttons -->
+          <ul class="action list-inline banner-social-buttons">
+            <li class="list-inline-item">
+              <a class="btn btn-dark" href="mailto:me@lucasvienna.dev">
+                <i class="fas fa-envelope"></i> Email
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-dark" href="{{ site.linkedin.url }}">
+                <i class="fab fa-linkedin"></i> LinkedIn
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-dark" href="{{ site.github.url }}">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </li>
+          </ul>
+
+          {% if page.layout == 'home' and site.github.is_project_page and site.show_github %}
+          <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
+          {% if site.show_downloads %}
+          <a href="{{ site.github.zip_url }}" class="btn">Download .zip</a>
+          <a href="{{ site.github.tar_url }}" class="btn">Download .tar.gz</a>
+          {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- else -%}
+
+  <div class="jumbotron jumbotron-fluid header header-page">
+    <div class="container">
+      <h1 class="project-name">{{ page.title }}</h1>
+      <h5 class="project-tagline">{{ page.subtitle }}</h5>
+
+      <!-- Post tagline -->
+      {% if page.layout == 'post' %}
+      <h2 class="project-date">
+        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+          {% assign date_format = site.cayman-blog.date_format | default: "%b %-d, %Y" %}
+          {{ page.date | date: date_format }}
+        </time>
+        {% assign page_author = page.author | default: site.author | default: nil | escape %}
+        {% if page_author %}
+        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span
+            itemprop="name">{{ page_author }}</span></span>
+        {% endif %}
+      </h2>
+      {% endif %}
+      <!-- End: Post tagline -->
+    </div>
+  </div>
+
+  {%- endif -%}
+</header>

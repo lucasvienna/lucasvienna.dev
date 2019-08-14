@@ -1,0 +1,51 @@
+// sensible normalized styles
+@import "normalize";
+// code highliting
+@import "rouge-github";
+// colors, breakpoints and font settings
+@import "variables";
+@import "mixins";
+// external imports
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+/*
+ * Global Styles
+ */
+* {
+  box-sizing: border-box;
+  transition: all 0.2s ease-out
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Lato', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: $body-font-size;
+  line-height: 1.5;
+  color: $body-text-color;
+}
+
+a {
+  color: $body-link-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/*
+ * Content Styles
+ */
+@import "section/main";
+
+/*
+ * Section Styles
+ */
+@import "section/header";
+@import "section/footer";
+
+/*
+ * Page-specific Styles
+ */
+@import "blog";
