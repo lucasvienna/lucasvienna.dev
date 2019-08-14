@@ -9,12 +9,10 @@ before_install:
 
 script: bundle exec jekyll build
 
-after_script: cp -r _site/ docs/
-
 deploy:
   provider: pages
   skip_cleanup: true
-  local_dir: docs
+  local_dir: _site
   github_token: $GITHUB_TOKEN
   keep_history: true
   on:
