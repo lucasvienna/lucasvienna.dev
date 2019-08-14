@@ -9,6 +9,8 @@ before_install:
 
 script: bundle exec jekyll build
 
+before_deploy: echo "lucasvienna.dev" > _site/CNAME
+
 deploy:
   provider: pages
   skip_cleanup: true
