@@ -1,6 +1,6 @@
-## The who and the what
+# https://lucasvienna.me
 
-##### _Student, hacker, FOSS-lover. I like to solve problems and build things._
+##### _Student, hacker, translator. I like to solve problems and build things._
 
 My development blog. This is where I talk about code, tech, my projects and
 anything related to my professional life.
