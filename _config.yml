@@ -1,9 +1,9 @@
 # Site settings
 title: Lucas Vienna
 subtitle: Hochschule Karlsruhe | IIB | 2022
-description: >- # this means to ignore newlines until "baseurl:"
-  My development blog. This is where I talk about code, tech, my projects and
-  anything related to my professional life.
+description: >-
+  My resumé, portfolio, and development blog. This is where I talk about code,
+  tech, my projects, and anything related to my professional life.
 
   You'll see posts about tools, languages, frameworks, apps, websites and more.
   Mostly I'll talk about my current project, the tooling I'm using and how/why
