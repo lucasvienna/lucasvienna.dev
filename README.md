@@ -1,4 +1,4 @@
-# https://lucasvienna.me
+# https://lucasvienna.dev
 [![Build Status](https://travis-ci.com/Avyiel/lucasvienna.dev.svg?branch=master)](https://travis-ci.com/Avyiel/lucasvienna.dev)
 ##### _Student, hacker, translator. I like to solve problems and build things._
 
