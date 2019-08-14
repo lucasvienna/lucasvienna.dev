@@ -2,7 +2,7 @@
 layout: page
 title: About
 subtitle: A few words about me
-permalink: /about.html
+permalink: /about
 ---
 
 #### _Student, hacker, translator. I like to solve problems and build things._
