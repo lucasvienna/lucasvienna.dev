@@ -1,5 +1,5 @@
 # https://lucasvienna.me
-
+[![Build Status](https://travis-ci.com/Avyiel/lucasvienna.dev.svg?branch=master)](https://travis-ci.com/Avyiel/lucasvienna.dev)
 ##### _Student, hacker, translator. I like to solve problems and build things._
 
 My development blog. This is where I talk about code, tech, my projects and
