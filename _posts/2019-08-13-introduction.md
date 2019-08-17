@@ -1,6 +1,6 @@
 ---
 layout: post
-author: Lucas Vienna
+title: Introduction
 ---
 
 **Hi, my name is Lucas**
