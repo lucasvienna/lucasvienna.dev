@@ -2,6 +2,7 @@
 layout: post
 title: My dotfiles
 subtitle: Configuring your development environment and tools
+permalink: dotfiles
 ---
 
 Your dotfiles hold the configurations that control your entire work environment, from how they look to hows they should act. These are my dotfiles, and the system I use to manage them.
