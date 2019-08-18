@@ -7,7 +7,7 @@ before_install:
   - gem update --system
   - gem install bundler
 
-script: bundle exec jekyll build
+script: JEKYLL_ENV=production bundle exec jekyll build
 
 before_deploy: echo "lucasvienna.dev" > _site/CNAME
 
