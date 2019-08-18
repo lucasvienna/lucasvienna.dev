@@ -17,18 +17,23 @@ First off, [here are my dotfiles](https://github.com/Avyiel/dotfiles). I version
 - git
 - terminfo
 
-So, onto my setup: I use iTerm 2 as my terminal emulator with tmux to handle panels, zsh as my shell and nvim as my text editor (I also use VS Code, but that's for another post). I also use git as my version control tool.
+So, onto my setup: I use iTerm 2 as my terminal emulator with tmux to handle panels, zsh as my shell and nvim as my text editor (I also use VS Code, but that's for another post). I use git as my version control tool.
+
+If you're unfamiliar with any of these tools, I can recommend a few sources. Google the rest, the GitHub wikis do a good job.
+
+- [Cheatsheet for nvim commands](https://vim.rtorr.com/)
+- [Minimalist intro to tmux](https://medium.com/actualize-network/a-minimalist-guide-to-tmux-13675fb160fa)
 
 I **strongly** recommend that you take a look at all the files before doing anything. Never run random scripts from the internet without reading them first, even if you "trust" the source.
 
 ## Pre-requisites
 
-To get started with my dotfiles, there are a few pre-requisites:
+To get started with my dotfiles, make sure you have these already installed:
 
-1. Having Xcode Command Line Tools (CLT) installed
-2. Having git installed
+1. Xcode Command Line Tools (CLT)
+2. git
 
-All the rest will be handled by the script. Git is there to clone the repository, and Xcode for its build tools. You will have to run `xcode-select --install` after installing Xcode, and git comes pre-installed in macOS so no extra work for you.
+Git is there to clone the repository, and Xcode for its build tools. Git comes pre-installed in macOS so no extra work there. Xcode can be found in the App Store, and you will have to run `xcode-select --install` after installing it. All the rest will be handled by the script.
 
 ## Usage
 
@@ -117,10 +122,14 @@ function doIt() {
   stow zsh
   stow git
 
-  # install nvim plugins
+  # install nvim plugins and python addon
+  pip3 install --user --upgrade neovim
   nvim +PlugClean! +qall
   nvim +silent +PlugInstall +qall
   python3 ~/.config/nvim/plugged/YouCompleteMe/install.py
+
+  # install tpm
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
   # launch the spaceship
   spaceship
@@ -128,7 +137,7 @@ function doIt() {
 {% endhighlight %}
 
 The meat of this script. It "just does it" all. First off, we're calling another script: `brew.sh`. We'll go over what that one does a bit later. Then we install homebrew (an awesome package manager for macOS), vim-plug (a plugin manager for vim/neovim), and oh-my-zsh (a theme/plugin manager for zsh). Afterwards, it uses GNU `stow` to symlink all the actual dotfiles into your home directory. Stow is pretty neat in that it keeps the folder structure intact while doing the symlinking.
-Then we set neovim up with its plugins, and lastly we install our theme.
+Then we set neovim up with its plugins, the tmux plugin manager (tpm), and lastly we install our theme.
 
 {% highlight shell %}
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
@@ -158,7 +167,7 @@ You should be saying something in the lines of "hold up! There's another script 
 
 ### Homebrew Bottles & Casks
 
-This pretty little script is a big mess, really. It calls `brew install` **2** times. I could use backslashes and do it all in a single command. I might change that at a later date, but for now it serves its purpose: to pour bottles and casks. That's homebrew slang for "install CLI programs and macOS applications". Instead of going over all the code in the script (I still recommend you go through it before running `bootstrap.sh`), I'll just list all the stuff it installs. If you don't need/want anything, simply remove that line or comment it out.
+This pretty little script is a big mess, really. It calls `brew install` **22** times. I could use backslashes and do it all in a single command. I might change that at a later date, but for now it serves its purpose: to pour bottles and casks. That's homebrew slang for "install CLI programs and macOS applications". Instead of going over all the code in the script (I still recommend you go through it before running `bootstrap.sh`), I'll just list all the stuff it installs. If you don't need/want anything, simply remove that line or comment it out.
 
 #### Bottles
 - coreutils
@@ -208,9 +217,9 @@ This pretty little script is a big mess, really. It calls `brew install` **2** t
 - skype
 - discord
 
-Git is in the list because the version bundled with macOS is usually outdated. The casks (or apps) I install are a basic set of widely used ones, such as browsers, comms apps, helpers, and tools. There are also tools required by nvim (such as silver searcher and ag), by Flutter (the last 5 bottles), the entire Docker suite and some random (but very useful) tools like prettyping and git-flow (if you happen to use that workflow).
+Git is in the list because the version bundled with macOS is usually outdated. The casks (or apps) I install are a basic set of widely used ones, such as browsers, comms apps, helpers, and tools. There are also programs required by nvim (such as silver searcher and ag), by Flutter (the last 5 bottles), the entire Docker suite and some random (but very useful) tools like prettyping and git-flow (if you happen to use that workflow).
 
-Lastly, let's talk about the actual configuration in my dotfiles.
+Next up, let's talk about the actual configuration in my dotfiles.
 
 ## The dotfiles themselves
 ### git
