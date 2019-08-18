@@ -35,6 +35,7 @@ show_downloads: false
 
 # Build settings
 markdown: kramdown
+highlighter: rouge
 compress_html:
   blanklines: true
   comments: ["<!-- ", " -->"]
