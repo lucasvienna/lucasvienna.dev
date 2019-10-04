@@ -1,10 +1,10 @@
 ---
 layout: post
-title: How I built this website
+title: How I built this website - Pt. 1
 subtitle: A tutorial on integrating Jekyll, GitHub Pages, and Travis CI
 ---
 
-Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI.
+Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I'll cover requirements and the setup.
 
 # Motivation & Requirements
 
@@ -160,7 +160,7 @@ Now, install/update these gems:
 $ bundle install
 {% endhighlight %}
 
-Next up, configure your Jekyll environment. Open `_config.yml` in your favourite editor and read through the comments, it should give you a good idea of what is useful for you or not. Since I'll be using my own theme and no plugins, I've removed those. A few entries you should have in there are shown below. Remember to replace the actual values with your own information.
+Next up, configure your Jekyll environment. Open `_config.yml` in your favourite editor and read through the comments, it should give you a good idea of what is useful for you or not. Since I'll be using my own theme and no plugins, I've removed those. Also remove the theme gem from your Gemfile if you're not using one. A few entries you should have in there are shown below. Remember to replace the actual values with your own information.
 
 {% highlight yml %}
 # Site settings
@@ -171,16 +171,16 @@ description: Describe your site here
 # Personal Info
 owner: Lucas Vienna
 email: dev@lucasvienna.dev
-url: "https://lucasvienna.dev" # the custom domain you configure ealier
-baseurl: ""
+url: https://avyiel.github.io # the custom domain you configure ealier
+baseurl: /blog-demo # what comes after the '.io'
 repository: Avyiel/lucasvienna.dev # only the path part of the repository URL
 
 # Blogging Defaults
 author: Lucas Vienna
 
 # Build settings
-markdown: kramdown
-highlighter: rouge
+markdown: kramdown # this is the default, you can omit this line if desired
+highlighter: rouge # this is the default, you can omit this line if desired
 compress_html:
   blanklines: true
   comments: ["<!-- ", " -->"]
@@ -209,14 +209,14 @@ show_github: false
 show_downloads: false
 {% endhighlight %}
 
-## Adding templates and theming
+## Adding theming support
 
 For this part, those folders you created earlier come in handy. Jekyll uses specially-named folders to generate your website. `_layouts_` is what the name suggests, and describes how different pages can be formatted, AKA your templates. `_includes` holds snippets of a sort, smaller components you can insert into any page (read: in your templates). `_sass` contains our SASS files, the normaizer, and the `rouge` highlighter. `assets` contains our images and the entry point for the whole SASS business. Let's start there.
 
-Create two folders inside `assets`, and create the SASS entrypoint:
+Create a new folder inside `assets`, and add the SASS entrypoint:
 
 {% highlight shell %}
-$ mkdir assets/css assets/images
+$ mkdir -p assets/css
 $ touch assets/css/styles.scss
 {% endhighlight %}
 
@@ -231,11 +231,32 @@ Now paste this into `styles.scss`:
 
 This snippet is responsible for loading our main SASS file, `theme.scss`. Do not remove those hyphens at the start. The are required by Jekyll.
 
-Next up, let's install `rouge`. Since Jekyll is stuck with Rouge `2.2.1` ([see this GitHub issue](https://github.com/github/pages-gem/pull/652)), we'll poach an update SCSS version of it from the Cayman theme. Head over to [https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss](https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss), download this file and save it in your own `_scss` folder.
+Next up, let's install `rouge`. Since Jekyll is stuck with Rouge `2.2.1` ([see this GitHub issue](https://github.com/github/pages-gem/pull/652)), we'll poach an updated SCSS version of it from the Cayman theme. Head over to [https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss](https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss), download this file and save it in your own `_scss` folder. Once Jekyll upgrades, I will update this article accordingly.
 
-For `compress_html`, head over to [http://jch.penibelst.de/](http://jch.penibelst.de/) and simply follow their instructions. You'll end up with two new files inside your `_layouts` folder: `compress.html` and `default.html`. We'll go over the default layout later on.
+To install `compress_html`, head over to [http://jch.penibelst.de/](http://jch.penibelst.de/) and follow their instructions. You'll end up with two new files inside your `_layouts` folder: `compress.html` and `default.html`. We'll go over the default layout later on.
+
+Then, install `normalize.css`. All you need to do is copy the contents from [the source page](https://github.com/necolas/normalize.css/blob/master/normalize.css) and save it as `normalize.scss`.
+
+Lastly, create the `theme.scss` file and paste the following inside:
+
+{% highlight scss %}
+// sensible normalized styles
+@import "normalize";
+// code highliting
+@import "rouge-github";
+{% endhighlight %}
+
+That's it for now. You should have all the basic themeing setup covered.
+
+---
+
+## Closing
+
+On Part 2, I'll cover layouts, includes and more specific theming options.
 
 #### Sources
+
+A few websites that I used as reference while building my own solution.
 
 - [https://jekyllrb.com/docs/](https://jekyllrb.com/docs/)
 - [https://developpaper.com/automated-deployment-of-github-pages-with-travis-ci/](https://developpaper.com/automated-deployment-of-github-pages-with-travis-ci/)

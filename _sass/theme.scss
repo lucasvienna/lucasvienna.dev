@@ -34,6 +34,14 @@ a {
   }
 }
 
+img {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: -1px 1px #ccc,
+              -2px 2px #ccc,
+              -3px 3px #ccc;
+}
+
 /*
  * Content Styles
  */
