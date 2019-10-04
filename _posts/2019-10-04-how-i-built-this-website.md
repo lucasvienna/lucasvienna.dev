@@ -23,7 +23,7 @@ Enter point #1. Hosting is rather cheap, specially for my use-case: hosting a st
 
 Why do I need SSL, you might ask? Simple. My chosen domain has a `.dev` TLD, meaning I need HTTPS for all requests.
 
-You can see the source code for this website in my GitHub profile: [https://github.com/Avyiel/lucasvienna.dev](https://github.com/Avyiel/lucasvienna.dev)
+You can see the source code for this website in my GitHub profile: [https://github.com/Avyiel/blog-demo](https://github.com/Avyiel/blog-demo)
 
 # Setting up
 ## Git
@@ -49,7 +49,7 @@ Go to "Settings" and scroll down to the "Pages" section. If everything worked we
 
 ![Options - Pages](/assets/images/portfolio/options-gh-pages.png)
 
-- If not, first enable Pages, and then choose our recently-created `gh-pages` branch as the source.
+If not, first enable Pages, and then choose our recently-created `gh-pages` branch as the source.
 
 ## Custom Domain
 
@@ -81,13 +81,17 @@ Lastly, create a third environment variable, named _"JEKYLL_ENV"_, enter `produc
 
 ![Environment Variable JEKYLL_ENV](/assets/images/portfolio/jekyll-env-env.png)
 
-- It should look like this in the end:
+It should look like this in the end:
 
 ![Environment Variables](/assets/images/portfolio/env-vars.png)
 
 # Jekyll
 
-Now that we have our tooling all set up, it's time to actually write our website. I am working under the assumption that your repository only has 3 files: `LICENSE`, `README.md`, and `CNAME`. If you already have more things (say, some posts, assets and theme), you can port them later on. Also, I am working on macOS, so the instructions here apply to this OS. If you have a different one, make sure to change commands to their equivalent ones.
+Now that we have our tooling all set up, it's time to actually write our website. I am working under the assumption that your repository only has 3 files: `LICENSE`, `README.md`, and `CNAME`.
+
+> If you already have more things (say, some posts, assets and theme), you can port them later on.
+
+Also, I am working on macOS, so the instructions here apply to this OS. If you have a different one, make sure to change commands to their equivalent ones.
 
 From the [Jekyll website](https://jekyllrb.com/docs/):
 
@@ -160,7 +164,9 @@ Now, install/update these gems:
 $ bundle install
 {% endhighlight %}
 
-Next up, configure your Jekyll environment. Open `_config.yml` in your favourite editor and read through the comments, it should give you a good idea of what is useful for you or not. Since I'll be using my own theme and no plugins, I've removed those. Also remove the theme gem from your Gemfile if you're not using one. A few entries you should have in there are shown below. Remember to replace the actual values with your own information.
+Next up, configure your Jekyll environment. Open `_config.yml` in your favourite editor and read through the comments, it should give you a good idea of what is useful for you or not. A few entries you should have in there are shown below. Remember to replace the actual values with your own information.
+
+> Since I'll be using my own theme and no plugins, I've removed those entries. Also remove the theme gem from your Gemfile if you're not using one.
 
 {% highlight yml %}
 # Site settings
@@ -211,9 +217,17 @@ show_downloads: false
 
 ## Adding theming support
 
-For this part, those folders you created earlier come in handy. Jekyll uses specially-named folders to generate your website. `_layouts_` is what the name suggests, and describes how different pages can be formatted, AKA your templates. `_includes` holds snippets of a sort, smaller components you can insert into any page (read: in your templates). `_sass` contains our SASS files, the normaizer, and the `rouge` highlighter. `assets` contains our images and the entry point for the whole SASS business. Let's start there.
+For this part, those folders you created earlier come in handy. Jekyll uses specially-named folders to generate your website.
 
-Create a new folder inside `assets`, and add the SASS entrypoint:
+> `_layouts` is what the name suggests, and describes how different pages can be formatted, AKA your templates.
+
+> `_includes` holds snippets of a sort, smaller components you can insert into any page (read: in your templates).
+
+> `_sass` contains our SASS files, the normaizer, and the `rouge` highlighter.
+
+> `assets` contains our images and the entry point for the whole SASS business. Let's start there.
+
+Create a new folder inside `assets`, and add the CSS entrypoint:
 
 {% highlight shell %}
 $ mkdir -p assets/css
@@ -229,7 +243,7 @@ Now paste this into `styles.scss`:
 @import 'theme';
 {% endhighlight %}
 
-This snippet is responsible for loading our main SASS file, `theme.scss`. Do not remove those hyphens at the start. The are required by Jekyll.
+> This snippet is responsible for loading our main SASS file, `theme.scss`. Do not remove those hyphens at the start; they are the front matter, and are required by Jekyll.
 
 Next up, let's install `rouge`. Since Jekyll is stuck with Rouge `2.2.1` ([see this GitHub issue](https://github.com/github/pages-gem/pull/652)), we'll poach an updated SCSS version of it from the Cayman theme. Head over to [https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss](https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss), download this file and save it in your own `_scss` folder. Once Jekyll upgrades, I will update this article accordingly.
 
