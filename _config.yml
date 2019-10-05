@@ -35,6 +35,7 @@ show_github: false
 show_downloads: false
 
 # Build settings
+include: ['_pages']
 markdown: kramdown
 highlighter: rouge
 compress_html:

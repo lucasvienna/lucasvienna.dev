@@ -187,6 +187,7 @@ author: Lucas Vienna
 # Build settings
 markdown: kramdown # this is the default, you can omit this line if desired
 highlighter: rouge # this is the default, you can omit this line if desired
+include: ['_pages']
 compress_html:
   blanklines: true
   comments: ["<!-- ", " -->"]
@@ -194,7 +195,7 @@ compress_html:
     envs: [development] # don't compress during development
 {% endhighlight %}
 
-The most important part here are the _Build settings_. They define the markdown processor, the code highlighter, and configure HTML compression on production build (this helps make the website smaller).
+The most important part here are the _Build settings_. They define the markdown processor, the code highlighter, and configure HTML compression on production build (this helps make the website smaller). The `include` entry tells Jekyll to process these directories, so that we can have our static pages grouped up.
 
 You can also define your own variables, that can be accessed throught your templates. I've done that for my social handles and some display options. Once again, replace these values with your own.
 
