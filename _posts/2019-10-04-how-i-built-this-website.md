@@ -276,3 +276,4 @@ A few websites that I used as reference while building my own solution.
 - [https://jekyllrb.com/docs/](https://jekyllrb.com/docs/)
 - [https://developpaper.com/automated-deployment-of-github-pages-with-travis-ci/](https://developpaper.com/automated-deployment-of-github-pages-with-travis-ci/)
 - [https://voorhoede.github.io/front-end-tooling-recipes/travis-deploy-to-gh-pages/](https://voorhoede.github.io/front-end-tooling-recipes/travis-deploy-to-gh-pages/)
+- [https://github.com/jekyll/jekyll/issues/920#issuecomment-63093764](https://github.com/jekyll/jekyll/issues/920#issuecomment-63093764)
