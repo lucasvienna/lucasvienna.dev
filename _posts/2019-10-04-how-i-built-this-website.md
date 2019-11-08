@@ -30,7 +30,7 @@ You can see the source code for this website in my GitHub profile: [https://gith
 
 First order of business is setting up an orphan branch on your repository that will be used to deploy your website:
 
-Inside your website's root, create a new orphan branch and push it:
+Inside your website's root, create a new orphan branch and push it. Then, move back to the master branch, since we'll do all our work there.
 
 {% highlight shell %}
 $ git checkout --orphan gh-pages
@@ -39,13 +39,14 @@ $ echo "Placeholder page" > index.html
 $ git add index.html
 $ git commit -a -m "Placeholder page"
 $ git push origin gh-pages
+$ git checkout master
 {% endhighlight %}
 
 ## GitHub
 
-Then, we configure our GitHub repository to use GitHub Pages, and use our newly pushed branch as the source:
+Once our orphan branch has been pushed, we need configure our GitHub repository to use GitHub Pages, and use our new branch as the source:
 
-Go to "Settings" and scroll down to the "Pages" section. If everything worked well, you should see the following:
+In your repository page, go to "Settings" and scroll down to the "Pages" section. If everything worked well, you should see the following:
 
 ![Options - Pages](/assets/images/portfolio/options-gh-pages.png)
 
@@ -91,7 +92,7 @@ Now that we have our tooling all set up, it's time to actually write our website
 
 > If you already have more things (say, some posts, assets and theme), you can port them later on.
 
-Also, I am working on macOS, so the instructions here apply to this OS. If you have a different one, make sure to change commands to their equivalent ones.
+Also, I am working on macOS, so the instructions here apply to this OS. If you have a different one, make sure to change commands to their equivalent ones. Remember to read the commands before running them. Also, swap out `myblog` for your chosen repository name, else this won't work.
 
 From the [Jekyll website](https://jekyllrb.com/docs/):
 
@@ -130,7 +131,7 @@ $ cp ../myblog_old/CNAME .
 $ bundle exec jekyll serve
 {% endhighlight %}
 
-Obviously, swap out `myblog` for your chosen repository name. If everything went according to plan, you sould see something like this in your browser:
+If everything went according to plan, you sould see something like this in your browser:
 
 ![Default Jekyll Website](/assets/images/portfolio/default-site.png)
 
@@ -142,7 +143,7 @@ Now for the interesting part: making that site yours. Go ahead and create a few 
 $ mkdir _layouts _includes _sass assets
 {% endhighlight %}
 
-Then, clean up your Gemfile. It comes heavily commented and has some unnecessary gems, namely the Windows-relate ones. If you're on Windows, do keep those gems in there.
+Then, clean up your Gemfile. It comes heavily commented and has some unnecessary gems, namely the Windows-related ones. If you're on Windows, do keep those gems in there.
 
 {% highlight ruby %}
 source "https://rubygems.org"
@@ -246,13 +247,13 @@ Now paste this into `styles.scss`:
 
 > This snippet is responsible for loading our main SASS file, `theme.scss`. Do not remove those hyphens at the start; they are the front matter, and are required by Jekyll.
 
-Next up, let's install `rouge`. Since Jekyll is stuck with Rouge `2.2.1` ([see this GitHub issue](https://github.com/github/pages-gem/pull/652)), we'll poach an updated SCSS version of it from the Cayman theme. Head over to [https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss](https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss), download this file and save it in your own `_scss` folder. Once Jekyll upgrades, I will update this article accordingly.
+Next up, let's install `rouge`. Since Jekyll is stuck with Rouge `2.2.1` ([see this GitHub issue](https://github.com/github/pages-gem/pull/652)), we'll poach an updated SCSS version of it from the Cayman theme. Head over to [https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss](https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss), download this file and save it in your own `_sass` folder. Once Jekyll upgrades, I will update this article accordingly.
 
 To install `compress_html`, head over to [http://jch.penibelst.de/](http://jch.penibelst.de/) and follow their instructions. You'll end up with two new files inside your `_layouts` folder: `compress.html` and `default.html`. We'll go over the default layout later on.
 
-Then, install `normalize.css`. All you need to do is copy the contents from [the source page](https://github.com/necolas/normalize.css/blob/master/normalize.css) and save it as `normalize.scss`.
+Then, install `normalize.css`. All you need to do is copy the contents from [the source page](https://github.com/necolas/normalize.css/blob/master/normalize.css) and save it as `normalize.scss` inside your `_sass` folder.
 
-Lastly, create the `theme.scss` file and paste the following inside:
+Lastly, create a file called `theme.scss` inside `_sass` and paste the following inside:
 
 {% highlight scss %}
 // sensible normalized styles
