@@ -1,0 +1,44 @@
+- name: lucasvienna.dev
+  url: https://github.com/Avyiel/lucasvienna.dev
+  stack:
+    - jekyll
+    - liquid
+    - html
+    - scss
+    - bootstrap
+  description: >-
+    This website. Built to be my resumè, portfolio and blog all in one.
+
+- name: digrapher
+  url: https://github.com/Avyiel/digrapher
+  stack:
+    - vue
+    - typescript
+    - javascript
+    - webpack
+  description: >-
+    Small Vue demo. Tool I built to help me with some exercises in college.
+
+- name: dotfiles
+  url: https://github.com/Avyiel/dotfiles
+  stack:
+    - bash
+    - stow
+  description: >-
+    My development environment's dotfiles. Configuration files for things like
+    tmux, neovim, git etc.
+
+- name: dracula-tmux
+  url: https://github.com/Avyiel/dracula-tmux
+  stack:
+    - tmux
+  description: >-
+    The tmux theme I use. It's a mix between Nord and Dracula, with some special
+    bits of my own.
+
+- name: tempus
+  url: https://github.com/Avyiel/tempus
+  stack:
+    - dart
+  description: >-
+    A handy tool for date & time manipulation in Dart.
