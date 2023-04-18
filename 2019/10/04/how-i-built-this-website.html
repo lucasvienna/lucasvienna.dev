@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#bb1f39">
+<html itemscope itemtype="http://schema.org/Article">
+<meta name="description" content="Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll cover requirements and the setup." />
+<meta itemprop="name" content="" />
+<meta itemprop="description" content="Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll cover requirements and the setup." />
+<meta itemprop="image" content="https://lucasvienna.dev" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="" />
+<meta name="twitter:description" content="Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll cover requirements and the setup." />
+<meta name="twitter:image:src" content="https://lucasvienna.dev" />
+<meta name="twitter:image" content="https://lucasvienna.dev" />
+<meta name="twitter:url" content="https://lucasvienna.dev/2019/10/04/how-i-built-this-website.html" />
+<meta property="og:title" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lucasvienna.dev/2019/10/04/how-i-built-this-website.html" />
+<meta property="og:image" content="https://lucasvienna.dev" />
+<meta property="og:description" content="Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll cover requirements and the setup." />
+<meta property="og:site_name" content="Lucas Vienna" />
+<meta property="og:locale" content="" />
+<meta property="article:published_time" content="2019-10-04T00:00:00+00:00" />
+    <title>How I built this website - Pt. 1</title>
+    <link rel="canonical" href="https://lucasvienna.dev/2019/10/04/how-i-built-this-website.html">
+    <link rel="shortcut icon" href="https://lucasvienna.dev/favicon.ico">
+    <meta name="robots" content="noarchive">
+    <link href="https://fonts.googleapis.com/css?family=Lato:200,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-137722940-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-137722940-1');
+</script>
+  </head>
+  <body>
+<div class="container">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="/">Lucas Vienna</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/portfolio">Portfolio</a>
+            </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+    <header class="site-header" role="banner">
+  <div class="jumbotron jumbotron-fluid header header-page">
+    <div class="container">
+      <h1 class="project-name">How I built this website - Pt. 1</h1>
+      <h5 class="project-tagline">A tutorial on integrating Jekyll, GitHub Pages, and Travis CI</h5>
+      <h2 class="project-date">
+        <time datetime="2019-10-04T00:00:00+00:00" itemprop="datePublished">
+          Oct 4, 2019
+        </time>
+      </h2>
+    </div>
+  </div>
+</header>
+    <div class="container">
+      <section class="main-content">
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+  <div itemprop="articleBody">
+    <p>Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll cover requirements and the setup.</p>
+<h1 id="motivation--requirements">Motivation &amp; Requirements</h1>
+<p>I wanted a platform where I could showcase my development skills and write posts about how I acquired/use said skills. My idea was to have a portfolio website with an integrated, simple blog where I could write my musings. This right here is the result of a few hours of writing code, testing everything out and eventually deciding to use Travis CI to automate the whole process of deploying the site.</p>
+<p>I had a few requirements in mind before starting out:</p>
+<ol>
+  <li>Hosting should be affordable. Free is best</li>
+  <li>The website should be lightweight and fast</li>
+  <li>Very little maintenance required</li>
+  <li>Custom domains with SSL support</li>
+</ol>
+<p>Regarding point #2, I wanted a small, fast, and performant website that “just worked” every time, and that even hamster-powered networks could load. I decided a templating solution would work well for me.</p>
+<p>Enter point #1. Hosting is rather cheap, specially for my use-case: hosting a static, template-based website. Enter <a href="https://pages.github.com/">GitHub Pages</a> and their free hosting. Oh, what is that? They user Jekyll under the hood too? <em>And</em> they support custom URLs with SSL enabled? Bingo.</p>
+<p>Why do I need SSL, you might ask? Simple. My chosen domain has a <code class="language-plaintext highlighter-rouge">.dev</code> TLD, meaning I need HTTPS for all requests.</p>
+<p>You can see the source code for this website in my GitHub profile: <a href="https://github.com/Avyiel/blog-demo">https://github.com/Avyiel/blog-demo</a></p>
+<h1 id="setting-up">Setting up</h1>
+<h2 id="git">Git</h2>
+<p>First order of business is setting up an orphan branch on your repository that will be used to deploy your website:</p>
+<p>Inside your website’s root, create a new orphan branch and push it. Then, move back to the master branch, since we’ll do all our work there.</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>git checkout <span class="nt">--orphan</span> gh-pages
+<span class="nv">$ </span>git <span class="nb">rm</span> <span class="nt">-rf</span> <span class="nb">.</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"Placeholder page"</span> <span class="o">&gt;</span> index.html
+<span class="nv">$ </span>git add index.html
+<span class="nv">$ </span>git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s2">"Placeholder page"</span>
+<span class="nv">$ </span>git push origin gh-pages
+<span class="nv">$ </span>git checkout master</code></pre></figure>
+<h2 id="github">GitHub</h2>
+<p>Once our orphan branch has been pushed, we need configure our GitHub repository to use GitHub Pages, and use our new branch as the source:</p>
+<p>In your repository page, go to “Settings” and scroll down to the “Pages” section. If everything worked well, you should see the following:</p>
+<p><img src="/assets/images/portfolio/options-gh-pages.png" alt="Options - Pages" /></p>
+<p>If not, first enable Pages, and then choose our recently-created <code class="language-plaintext highlighter-rouge">gh-pages</code> branch as the source.</p>
+<h2 id="custom-domain">Custom Domain</h2>
+<p>If you have a custom domain and wish to use it, this is the time to type it in the designated field. It will generate a <code class="language-plaintext highlighter-rouge">CNAME</code> file in the root of your repository, but you’ll still need to edit your DNS records. GitHub has excellent documentation on how to do this, so simply follow the instructions <a href="https://help.github.com/en/articles/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain">on their own help page</a> to set your DNS records up. It should look somewhat like this after you’re done:</p>
+<p><img src="/assets/images/portfolio/dns-records.png" alt="DNS Records" /></p>
+<h2 id="travis-ci">Travis CI</h2>
+<p>Next up is Travis CI. First, we need two personal access tokens:</p>
+<p>Head over to <a href="https://github.com/settings/tokens/new">https://github.com/settings/tokens/new</a> and create the first token: our TravisCI token, with <code class="language-plaintext highlighter-rouge">repo</code> permissions. <strong>Do not close, refresh the page or navigate away. This token will only be visible once</strong>.</p>
+<p><img src="/assets/images/portfolio/travis-token.png" alt="Travis CI Personal Access Token" /></p>
+<p>Then, head to <a href="https://travis-ci.com/">Travis CI</a> (login or create an account) and find your repository. Click on “More Options” and select “Settings”. Scroll down to <em>Environment Variables</em> and create a new one named <em>“GITHUB_TOKEN”</em>, paste the token you created on the previous step and make sure “<em>Display value in build log”</em> is <strong>un</strong>checked.</p>
+<p><img src="/assets/images/portfolio/travis-token-env.png" alt="Environment Variable GITHUB_TOKEN" /></p>
+<p>Go back to GitHub and create a second token: our Jekyll token, with <code class="language-plaintext highlighter-rouge">public_repo</code> permissions. Again, <strong>do not close, refresh the page or navigate away. This token will only be visible once</strong>.</p>
+<p><img src="/assets/images/portfolio/jekyll-token.png" alt="Jekyll Personal Access Token" /></p>
+<p>Head over to Travis CI again, and on the same page create a second environment variable, named <em>“JEKYLL_GITHUB_TOKEN”</em>, paste the token you created on the previous step and make sure “<em>Display value in build log”</em> is <strong>un</strong>checked. You should save this token for later as well, so paste it somewhere safe.</p>
+<p><img src="/assets/images/portfolio/jekyll-token-env.png" alt="Environment Variable JEKYLL_GITHUB_TOKEN" /></p>
+<p>Lastly, create a third environment variable, named <em>“JEKYLL_ENV”</em>, enter <code class="language-plaintext highlighter-rouge">production</code> in the value field and make sure <em>“Display value in build log”</em> is <strong>checked</strong>.</p>
+<p><img src="/assets/images/portfolio/jekyll-env-env.png" alt="Environment Variable JEKYLL_ENV" /></p>
+<p>It should look like this in the end:</p>
+<p><img src="/assets/images/portfolio/env-vars.png" alt="Environment Variables" /></p>
+<h1 id="jekyll">Jekyll</h1>
+<p>Now that we have our tooling all set up, it’s time to actually write our website. I am working under the assumption that your repository only has 3 files: <code class="language-plaintext highlighter-rouge">LICENSE</code>, <code class="language-plaintext highlighter-rouge">README.md</code>, and <code class="language-plaintext highlighter-rouge">CNAME</code>.</p>
+<blockquote>
+  <p>If you already have more things (say, some posts, assets and theme), you can port them later on.</p>
+</blockquote>
+<p>Also, I am working on macOS, so the instructions here apply to this OS. If you have a different one, make sure to change commands to their equivalent ones. Remember to read the commands before running them. Also, swap out <code class="language-plaintext highlighter-rouge">myblog</code> for your chosen repository name, else this won’t work.</p>
+<p>From the <a href="https://jekyllrb.com/docs/">Jekyll website</a>:</p>
+<ul>
+  <li>Install a <a href="https://jekyllrb.com/docs/installation/macos/#install-ruby">full Ruby development environment</a></li>
+  <li>Install Jekyll and <a href="https://jekyllrb.com/docs/ruby-101/#bundler">bundler</a> <a href="https://jekyllrb.com/docs/ruby-101/#gems">gems</a>:</li>
+</ul>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>gem <span class="nb">install</span> <span class="nt">--user-install</span> bundler jekyll</code></pre></figure>
+<ul>
+  <li>Backup your current repository folder:</li>
+</ul>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">mv</span> ./myblog ./myblog_old</code></pre></figure>
+<ul>
+  <li>Create a new Jekyll site:</li>
+</ul>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>jekyll new myblog
+<span class="nv">$ </span><span class="nb">cd </span>myblog</code></pre></figure>
+<ul>
+  <li>Copy over your <code class="language-plaintext highlighter-rouge">.git</code> folder and existing files:</li>
+</ul>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">cp</span> <span class="nt">-r</span> ../myblog_old/.git <span class="nb">.</span>
+<span class="nv">$ </span><span class="nb">cp</span> ../myblog_old/LICENSE <span class="nb">.</span>
+<span class="nv">$ </span><span class="nb">cp</span> ../myblog_old/README.md <span class="nb">.</span>
+<span class="nv">$ </span><span class="nb">cp</span> ../myblog_old/CNAME .</code></pre></figure>
+<ul>
+  <li>Build the site and make it available on a local server</li>
+</ul>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>bundle <span class="nb">exec </span>jekyll serve</code></pre></figure>
+<p>If everything went according to plan, you sould see something like this in your browser:</p>
+<p><img src="/assets/images/portfolio/default-site.png" alt="Default Jekyll Website" /></p>
+<h2 id="customizing-your-installation">Customizing your installation</h2>
+<p>Now for the interesting part: making that site yours. Go ahead and create a few folders:</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">mkdir </span>_layouts _includes _sass assets</code></pre></figure>
+<p>Then, clean up your Gemfile. It comes heavily commented and has some unnecessary gems, namely the Windows-related ones. If you’re on Windows, do keep those gems in there.</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s2">"https://rubygems.org"</span>
+
+<span class="c1"># GitHub Pages. To upgrade, run `bundle update github-pages`</span>
+<span class="n">gem</span> <span class="s2">"github-pages"</span><span class="p">,</span> <span class="ss">group: :jekyll_plugins</span>
+
+<span class="c1"># Jekyll theme</span>
+<span class="n">gem</span> <span class="s2">"minima"</span><span class="p">,</span> <span class="s2">"~&gt; 2.0"</span>
+
+<span class="n">gem</span> <span class="s2">"dotenv"</span></code></pre></figure>
+<p>You will have noticed that I added <code class="language-plaintext highlighter-rouge">dotenv</code> to our list of dependencies. This comes into play later on, in order to let us fetch GitHub metadata using that token we created earlier.</p>
+<p>Now, install/update these gems:</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>bundle <span class="nb">install</span></code></pre></figure>
+<p>Next up, configure your Jekyll environment. Open <code class="language-plaintext highlighter-rouge">_config.yml</code> in your favourite editor and read through the comments, it should give you a good idea of what is useful for you or not. A few entries you should have in there are shown below. Remember to replace the actual values with your own information.</p>
+<blockquote>
+  <p>Since I’ll be using my own theme and no plugins, I’ve removed those entries. Also remove the theme gem from your Gemfile if you’re not using one.</p>
+</blockquote>
+<figure class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="c1"># Site settings</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">My title</span>
+<span class="na">subtitle</span><span class="pi">:</span> <span class="s">A subtitle</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Describe your site here</span>
+
+<span class="c1"># Personal Info</span>
+<span class="na">owner</span><span class="pi">:</span> <span class="s">Lucas Vienna</span>
+<span class="na">email</span><span class="pi">:</span> <span class="s">dev@lucasvienna.dev</span>
+<span class="na">url</span><span class="pi">:</span> <span class="s">https://avyiel.github.io</span> <span class="c1"># the custom domain you configure ealier</span>
+<span class="na">baseurl</span><span class="pi">:</span> <span class="s">/blog-demo</span> <span class="c1"># what comes after the '.io'</span>
+<span class="na">repository</span><span class="pi">:</span> <span class="s">Avyiel/lucasvienna.dev</span> <span class="c1"># only the path part of the repository URL</span>
+
+<span class="c1"># Blogging Defaults</span>
+<span class="na">author</span><span class="pi">:</span> <span class="s">Lucas Vienna</span>
+
+<span class="c1"># Build settings</span>
+<span class="na">markdown</span><span class="pi">:</span> <span class="s">kramdown</span> <span class="c1"># this is the default, you can omit this line if desired</span>
+<span class="na">highlighter</span><span class="pi">:</span> <span class="s">rouge</span> <span class="c1"># this is the default, you can omit this line if desired</span>
+<span class="na">include</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">_pages'</span><span class="pi">]</span>
+<span class="na">compress_html</span><span class="pi">:</span>
+  <span class="na">blanklines</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">comments</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">&lt;!--</span><span class="nv"> </span><span class="s">"</span><span class="pi">,</span> <span class="s2">"</span><span class="nv"> </span><span class="s">--&gt;"</span><span class="pi">]</span>
+  <span class="na">ignore</span><span class="pi">:</span>
+    <span class="na">envs</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">development</span><span class="pi">]</span> <span class="c1"># don't compress during development</span></code></pre></figure>
+<p>The most important part here are the <em>Build settings</em>. They define the markdown processor, the code highlighter, and configure HTML compression on production build (this helps make the website smaller). The <code class="language-plaintext highlighter-rouge">include</code> entry tells Jekyll to process these directories, so that we can have our static pages grouped up.</p>
+<p>You can also define your own variables, that can be accessed throught your templates. I’ve done that for my social handles and some display options. Once again, replace these values with your own.</p>
+<figure class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="c1"># Social References</span>
+<span class="na">twitter</span><span class="pi">:</span>
+  <span class="na">handle</span><span class="pi">:</span> <span class="s">Avyiel7</span>
+  <span class="na">url</span><span class="pi">:</span> <span class="s">https://twitter.com/avyiel7</span>
+<span class="na">github</span><span class="pi">:</span>
+  <span class="na">username</span><span class="pi">:</span> <span class="s">Avyiel</span>
+  <span class="na">url</span><span class="pi">:</span> <span class="s">https://github.com/Avyiel</span>
+<span class="na">linkedin</span><span class="pi">:</span>
+  <span class="na">username</span><span class="pi">:</span> <span class="s">lucasvienna</span>
+  <span class="na">url</span><span class="pi">:</span> <span class="s">https://linkedin.com/in/lucasvienna</span>
+
+<span class="c1"># Display settings</span>
+<span class="na">show_github</span><span class="pi">:</span> <span class="no">false</span>
+<span class="na">show_downloads</span><span class="pi">:</span> <span class="no">false</span></code></pre></figure>
+<h2 id="adding-theming-support">Adding theming support</h2>
+<p>For this part, those folders you created earlier come in handy. Jekyll uses specially-named folders to generate your website.</p>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">_layouts</code> is what the name suggests, and describes how different pages can be formatted, AKA your templates.</p>
+</blockquote>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">_includes</code> holds snippets of a sort, smaller components you can insert into any page (read: in your templates).</p>
+</blockquote>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">_sass</code> contains our SASS files, the normaizer, and the <code class="language-plaintext highlighter-rouge">rouge</code> highlighter.</p>
+</blockquote>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">assets</code> contains our images and the entry point for the whole SASS business. Let’s start there.</p>
+</blockquote>
+<p>Create a new folder inside <code class="language-plaintext highlighter-rouge">assets</code>, and add the CSS entrypoint:</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> assets/css
+<span class="nv">$ </span><span class="nb">touch </span>assets/css/styles.scss</code></pre></figure>
+<p>Now paste this into <code class="language-plaintext highlighter-rouge">styles.scss</code>:</p>
+<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="nt">---</span>
+<span class="nt">---</span>
+
+<span class="o">@</span><span class="nt">import</span> <span class="s1">'theme'</span><span class="p">;</span></code></pre></figure>
+<blockquote>
+  <p>This snippet is responsible for loading our main SASS file, <code class="language-plaintext highlighter-rouge">theme.scss</code>. Do not remove those hyphens at the start; they are the front matter, and are required by Jekyll.</p>
+</blockquote>
+<p>Next up, let’s install <code class="language-plaintext highlighter-rouge">rouge</code>. Since Jekyll is stuck with Rouge <code class="language-plaintext highlighter-rouge">2.2.1</code> (<a href="https://github.com/github/pages-gem/pull/652">see this GitHub issue</a>), we’ll poach an updated SCSS version of it from the Cayman theme. Head over to <a href="https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss">https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss</a>, download this file and save it in your own <code class="language-plaintext highlighter-rouge">_sass</code> folder. Once Jekyll upgrades, I will update this article accordingly.</p>
+<p>To install <code class="language-plaintext highlighter-rouge">compress_html</code>, head over to <a href="http://jch.penibelst.de/">http://jch.penibelst.de/</a> and follow their instructions. You’ll end up with two new files inside your <code class="language-plaintext highlighter-rouge">_layouts</code> folder: <code class="language-plaintext highlighter-rouge">compress.html</code> and <code class="language-plaintext highlighter-rouge">default.html</code>. We’ll go over the default layout later on.</p>
+<p>Then, install <code class="language-plaintext highlighter-rouge">normalize.css</code>. All you need to do is copy the contents from <a href="https://github.com/necolas/normalize.css/blob/master/normalize.css">the source page</a> and save it as <code class="language-plaintext highlighter-rouge">normalize.scss</code> inside your <code class="language-plaintext highlighter-rouge">_sass</code> folder.</p>
+<p>Lastly, create a file called <code class="language-plaintext highlighter-rouge">theme.scss</code> inside <code class="language-plaintext highlighter-rouge">_sass</code> and paste the following inside:</p>
+<figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="c1">// sensible normalized styles</span>
+<span class="k">@import</span> <span class="s2">"normalize"</span><span class="p">;</span>
+<span class="c1">// code highliting</span>
+<span class="k">@import</span> <span class="s2">"rouge-github"</span><span class="p">;</span></code></pre></figure>
+<p>That’s it for now. You should have all the basic themeing setup covered.</p>
+<hr />
+<h2 id="closing">Closing</h2>
+<p>On Part 2, I’ll cover layouts, includes and more specific theming options.</p>
+<h4 id="sources">Sources</h4>
+<p>A few websites that I used as reference while building my own solution.</p>
+<ul>
+  <li><a href="https://jekyllrb.com/docs/">https://jekyllrb.com/docs/</a></li>
+  <li><a href="https://developpaper.com/automated-deployment-of-github-pages-with-travis-ci/">https://developpaper.com/automated-deployment-of-github-pages-with-travis-ci/</a></li>
+  <li><a href="https://voorhoede.github.io/front-end-tooling-recipes/travis-deploy-to-gh-pages/">https://voorhoede.github.io/front-end-tooling-recipes/travis-deploy-to-gh-pages/</a></li>
+  <li><a href="https://github.com/jekyll/jekyll/issues/920#issuecomment-63093764">https://github.com/jekyll/jekyll/issues/920#issuecomment-63093764</a></li>
+</ul>
+  </div>
+</article>
+      </section>
+    </div>
+    <footer class="site-footer text-center">
+  <div>
+    <span class="footer-icon">
+      <a
+        href="https://github.com/Avyiel"
+        title="Avyiel's GitHub"
+        aria-label="Avyiel's GitHub"
+      >
+        <svg class="footer-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+        </svg>
+      </a>
+    </span>
+    <span class="footer-icon">
+      <a
+        href="https://twitter.com/avyiel7"
+        title="Avyiel7's Twitter"
+        aria-label="Avyiel7's Twitter"
+      >
+        <svg class="footer-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z" />
+        </svg>
+      </a>
+    </span>
+    <span class="footer-icon">
+      <a
+        href="/about"
+        title="Contact Lucas Vienna"
+        aria-label="Contact"
+      >
+        <svg class="footer-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z" />
+        </svg>
+      </a>
+    </span>
+    <span class="footer-icon">
+      <a
+        rel="me"
+        href="https://mastodon.social/@lucasvienna"
+        title="Mastodon"
+        aria-label="Mastodon"
+      >
+        <svg class="footer-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M 15.9375 4.03125 C 12.917 4.0435 9.9179219 4.4269844 8.3574219 5.1464844 C 8.3574219 5.1464844 5 6.6748594 5 11.880859 C 5 18.077859 4.9955 25.860234 10.5625 27.365234 C 12.6945 27.938234 14.527953 28.061562 16.001953 27.976562 C 18.676953 27.825562 20 27.005859 20 27.005859 L 19.910156 25.029297 C 19.910156 25.029297 18.176297 25.640313 16.029297 25.570312 C 13.902297 25.495313 11.6615 25.335688 11.3125 22.679688 C 11.2805 22.432688 11.264625 22.182594 11.265625 21.933594 C 15.772625 23.052594 19.615828 22.420969 20.673828 22.292969 C 23.627828 21.933969 26.199344 20.081672 26.527344 18.388672 C 27.041344 15.720672 26.998047 11.880859 26.998047 11.880859 C 26.998047 6.6748594 23.646484 5.1464844 23.646484 5.1464844 C 22.000984 4.3779844 18.958 4.019 15.9375 4.03125 z M 12.705078 8.0019531 C 13.739953 8.0297031 14.762578 8.4927031 15.392578 9.4707031 L 16.001953 10.505859 L 16.609375 9.4707031 C 17.874375 7.5037031 20.709594 7.6264375 22.058594 9.1484375 C 23.302594 10.596438 23.025391 11.531 23.025391 18 L 23.025391 18.001953 L 20.578125 18.001953 L 20.578125 12.373047 C 20.578125 9.7380469 17.21875 9.6362812 17.21875 12.738281 L 17.21875 16 L 14.787109 16 L 14.787109 12.738281 C 14.787109 9.6362812 11.429688 9.7360938 11.429688 12.371094 L 11.429688 18 L 8.9765625 18 C 8.9765625 11.526 8.7043594 10.585438 9.9433594 9.1484375 C 10.622859 8.3824375 11.670203 7.9742031 12.705078 8.0019531 z"></path>
+        </svg>
+      </a>
+    </span>
+  </div>
+  <span class="footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+  <div class="footer-owner">&copy; Lucas Vienna, 2019</div>
+</footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

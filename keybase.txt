@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/avyiel
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://lucasvienna.dev
+  * I am avyiel (https://keybase.io/avyiel) on keybase.
+  * I have a public key ASCmI3wq4uUsBeMl6ya7SGoWGoRTvv7oG7xjoy464RaoTgo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012018b6b0a854c127e409adf03f505a42197d1465f7104454da85bb4916e02374210a",
+      "host": "keybase.io",
+      "kid": "0120a6237c2ae2e52c05e325eb26bb486a161a8453befee81bbc63a32e3ae116a84e0a",
+      "uid": "4b594a6098cebeec93e3fcd28f762019",
+      "username": "avyiel"
+    },
+    "merkle_root": {
+      "ctime": 1569002966,
+      "hash": "ead8bb9e89f175a129132abc84475fdfe982ddb1890ceb47e6ad1567059a319cb3c82f07b08c82902e1be47a35c85b1a4d3e279120cb4bb7481eaa8a4bc1cd2b",
+      "hash_meta": "63417ba76c96af50f64959f2b732c224189be5472b0a87e448e9037c7d9a0c5f",
+      "seqno": 7647245
+    },
+    "service": {
+      "entropy": "Zqa7cidRgRYZOFtG8rFCJ8IZ",
+      "hostname": "lucasvienna.dev",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "4.5.0"
+  },
+  "ctime": 1569002974,
+  "expire_in": 504576000,
+  "prev": "c4fa88165f697b816adf462599ac82e8ad3bd6bc69c2ca320c7a8acbcb8d5435",
+  "seqno": 29,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgpiN8KuLlLAXjJesmu0hqFhqEU77+6Bu8Y6MuOuEWqE4Kp3BheWxvYWTESpcCHcQgxPqIFl9pe4Fq30YlmayC6K071rxpwsoyDHqKy8uNVDXEID5aT150AIMch3AjrfeE/vdKjOEdysdoby/1k6UHAdUhAgHCo3NpZ8RAoIz8gHmfVZDig/8k+6K8xwOZDEKK9VlRTfVmisVM9NQrX2Qq8qrnSLpcrGIzRJg6TKMR/6bTzHZATuwNExXDDqhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEINCNv/QsN37vAJ6YuJpGL+hvdaOrJ5pdgqQwWH5+rLPMo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/avyiel
+
+==================================================================

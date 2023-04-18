@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#bb1f39">
+<html itemscope itemtype="http://schema.org/Article">
+<meta name="description" content="Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll go over the layouts and included page snippets necessary to populate every page." />
+<meta itemprop="name" content="" />
+<meta itemprop="description" content="Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll go over the layouts and included page snippets necessary to populate every page." />
+<meta itemprop="image" content="https://lucasvienna.dev" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="" />
+<meta name="twitter:description" content="Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll go over the layouts and included page snippets necessary to populate every page." />
+<meta name="twitter:image:src" content="https://lucasvienna.dev" />
+<meta name="twitter:image" content="https://lucasvienna.dev" />
+<meta name="twitter:url" content="https://lucasvienna.dev/2019/10/15/how-i-built-this-website-pt-2.html" />
+<meta property="og:title" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lucasvienna.dev/2019/10/15/how-i-built-this-website-pt-2.html" />
+<meta property="og:image" content="https://lucasvienna.dev" />
+<meta property="og:description" content="Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll go over the layouts and included page snippets necessary to populate every page." />
+<meta property="og:site_name" content="Lucas Vienna" />
+<meta property="og:locale" content="" />
+<meta property="article:published_time" content="2019-10-15T00:00:00+00:00" />
+    <title>How I built this website - Pt. 2</title>
+    <link rel="canonical" href="https://lucasvienna.dev/2019/10/15/how-i-built-this-website-pt-2.html">
+    <link rel="shortcut icon" href="https://lucasvienna.dev/favicon.ico">
+    <meta name="robots" content="noarchive">
+    <link href="https://fonts.googleapis.com/css?family=Lato:200,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-137722940-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-137722940-1');
+</script>
+  </head>
+  <body>
+<div class="container">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="/">Lucas Vienna</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/portfolio">Portfolio</a>
+            </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+    <header class="site-header" role="banner">
+  <div class="jumbotron jumbotron-fluid header header-page">
+    <div class="container">
+      <h1 class="project-name">How I built this website - Pt. 2</h1>
+      <h5 class="project-tagline">A tutorial on integrating Jekyll, GitHub Pages, and Travis CI</h5>
+      <h2 class="project-date">
+        <time datetime="2019-10-15T00:00:00+00:00" itemprop="datePublished">
+          Oct 15, 2019
+        </time>
+      </h2>
+    </div>
+  </div>
+</header>
+    <div class="container">
+      <section class="main-content">
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+  <div itemprop="articleBody">
+    <p>Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll go over the layouts and included page snippets necessary to populate every page.</p>
+<h2 id="default-layout">Default layout</h2>
+<p>How about we create a baseplate for your pages? Let’s start with the default layout. If you’ve done everything corretly so far, your <code class="language-plaintext highlighter-rouge">default.html</code> should look like this:</p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html">---
+layout: compress
+---
+
+<span class="nt">&lt;html&gt;</span>
+{{ content }}
+<span class="nt">&lt;/html&gt;</span></code></pre></figure>
+<p>Not very exciting. Let’s scaffold a proper HTML website. Start by replacing the contents of this file with the following:</p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html">---
+layout: compress
+---
+
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"{{ page.lang | default: site.lang | default: "</span><span class="na">en</span><span class="err">"</span> <span class="err">}}"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+
+    <span class="c">&lt;!-- Non-nocial metatags --&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"IE=edge,chrome=1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1, maximum-scale=1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"theme-color"</span> <span class="na">content=</span><span class="s">"#bb1f39"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!-- Social metatags --&gt;</span>
+    {% include metatags.html %}
+
+    {% if page.title %}
+    {% assign page-title = page.title | escape %}
+    {% else %}
+    {% assign page-title = site.title | escape %}
+    {% endif %}
+    <span class="nt">&lt;title&gt;</span>{{ page-title }}<span class="nt">&lt;/title&gt;</span>
+
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"canonical"</span> <span class="na">href=</span><span class="s">"{{ page.url | replace:'index.html','' | absolute_url }}"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"shortcut icon"</span> <span class="na">href=</span><span class="s">"{{ site.url }}/favicon.ico"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"robots"</span> <span class="na">content=</span><span class="s">"noarchive"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+
+    {% include navbar.html %}
+    {% include header.html %}
+
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">"main-content"</span><span class="nt">&gt;</span>
+        {{ content }}
+      <span class="nt">&lt;/section&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    {% include footer.html %}
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span></code></pre></figure>
+<p>You will get a few build errors complaining about missing files. That’s expected, since I use a few import tags in this snippet, but we have no files corresponding to these tags. Let me first do a quick overview of what you just pasted, skipping the <code class="language-plaintext highlighter-rouge">include</code> tags.</p>
+<hr />
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"{{ page.lang | default: site.lang | default: "</span><span class="na">en</span><span class="err">"</span> <span class="err">}}"</span><span class="nt">&gt;</span></code></pre></figure>
+<p>This line tell the browser the language of your website. It defaults to <code class="language-plaintext highlighter-rouge">en</code> if neither <code class="language-plaintext highlighter-rouge">page.lang</code> nor <code class="language-plaintext highlighter-rouge">site.lang</code> are set. You can specify a custom, non-English language in your <code class="language-plaintext highlighter-rouge">_config.yml</code> by setting the <code class="language-plaintext highlighter-rouge">lang</code> tag or in your post’s front matter.</p>
+<hr />
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"theme-color"</span> <span class="na">content=</span><span class="s">"#bb1f39"</span><span class="nt">&gt;</span></code></pre></figure>
+<p>This line tells your phone’s browser what color to use when filling the status bar. You can remove it if you want, it’s not really necessary.</p>
+<hr />
+<figure class="highlight"><pre><code class="language-html" data-lang="html">{% if page.title %}
+{% assign page-title = page.title | escape %}
+{% else %}
+{% assign page-title = site.title | escape %}
+{% endif %}
+<span class="nt">&lt;title&gt;</span>{{ page-title }}<span class="nt">&lt;/title&gt;</span></code></pre></figure>
+<p>This whole construct dynamically assigns each page’s title, if it has one set, or just defaults to the site-wide title. Pretty neat.</p>
+<hr />
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"canonical"</span> <span class="na">href=</span><span class="s">"{{ page.url | replace:'index.html','' | absolute_url }}"</span><span class="nt">&gt;</span></code></pre></figure>
+<p>This is some light SEO optimization, it tells the browser what the “default” or “source” URL should be. It prevents duplicate pages from harming your SEO score.</p>
+<hr />
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"shortcut icon"</span> <span class="na">href=</span><span class="s">"{{ site.url }}/favicon.ico"</span><span class="nt">&gt;</span></code></pre></figure>
+<p>Tells your browser/phone what icon to use when adding a shortcut to the home screen.</p>
+<hr />
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"robots"</span> <span class="na">content=</span><span class="s">"noarchive"</span><span class="nt">&gt;</span></code></pre></figure>
+<p>Asks (politely) that search engines crawlers do not cache your website. Useful to prevent stale caches and outdated articles from sticking around.</p>
+<hr />
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">"main-content"</span><span class="nt">&gt;</span>
+    {{ content }}
+  <span class="nt">&lt;/section&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></figure>
+<p>The meat and potatoes of the whole template. It tells Jekyll where to insert yor content. These CSS classes will be useful later on, when we add Semantic UI as our CSS framework.</p>
+<hr />
+<h2 id="includes">Includes</h2>
+<p>Now that we’ve covered what everything in our baseplate does, let’s take a look at the <code class="language-plaintext highlighter-rouge">include</code> tags. There are 4 of them in that layout:</p>
+<figure class="highlight"><pre><code class="language-liquid" data-lang="liquid"><span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>metatags.html<span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>navbar.html<span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>header.html<span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>footer.html<span class="w"> </span><span class="p">%}</span></code></pre></figure>
+<blockquote>
+  <p>This means that the content of these 4 referenced files should be inserted where the tag is, verbatim. These files should be saved inside (surprise, surprise) <code class="language-plaintext highlighter-rouge">_includes</code>.</p>
+</blockquote>
+<p>I’ll start off with the <code class="language-plaintext highlighter-rouge">metatags.html</code> file. Head over to <a href="https://github.com/Avyiel/blog-demo/blob/master/_includes/metatags.html">this demo’s repository</a>, and copy its contents to your own <code class="language-plaintext highlighter-rouge">metatags.html</code>. I won’t go into detail, but this include helps other websites display information about your blog, such as title, description, author, etc. You can skip this include if you don’t feel like integrating it, but it doesn’t hurt to have these tags.</p>
+<h3 id="navbar">Navbar</h3>
+<p>Let’s take a look at the navbar now. I opted for an auto-generated list of pages, so that I don’t have to manually input them as I add top-level pages. Start by copying the following code to your <code class="language-plaintext highlighter-rouge">navbar.html</code>.</p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html">{% assign default_paths = site.pages | map: "path" %}
+{% assign page_paths = site.header_pages | default: default_paths %}
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">"navbar navbar-expand-md navbar-light bg-white"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"navbar-brand"</span> <span class="na">href=</span><span class="s">"{{ "</span><span class="err">/"</span> <span class="err">|</span> <span class="na">relative_url</span> <span class="err">}}"</span><span class="nt">&gt;</span>{{ site.title | escape }}<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;button</span>
+      <span class="na">class=</span><span class="s">"navbar-toggler"</span>
+      <span class="na">type=</span><span class="s">"button"</span>
+      <span class="na">data-toggle=</span><span class="s">"collapse"</span>
+      <span class="na">data-target=</span><span class="s">"#navbarSupportedContent"</span>
+      <span class="na">aria-controls=</span><span class="s">"navbarSupportedContent"</span>
+      <span class="na">aria-expanded=</span><span class="s">"false"</span>
+      <span class="na">aria-label=</span><span class="s">"Toggle navigation"</span>
+    <span class="nt">&gt;</span>
+      <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"navbar-toggler-icon"</span><span class="nt">&gt;&lt;/span&gt;</span>
+    <span class="nt">&lt;/button&gt;</span>
+
+  {% if page_paths %}
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"collapse navbar-collapse"</span> <span class="na">id=</span><span class="s">"navbarSupportedContent"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"navbar-nav mr-auto"</span><span class="nt">&gt;</span>
+      {% for path in page_paths %}
+        {% assign my_page = site.pages | where: "path", path | first %}
+        {% if my_page.title %}{% unless my_page.title contains "404" %}
+          {% if my_page.url == page.url %}
+          <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item active"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"{{ my_page.url | relative_url }}"</span><span class="nt">&gt;</span>{{ my_page.title | escape }}
+              <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"sr-only"</span><span class="nt">&gt;</span>(current)<span class="nt">&lt;/span&gt;</span>
+            <span class="nt">&lt;/a&gt;</span>
+          <span class="nt">&lt;/li&gt;</span>
+          {% else %}
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"{{ my_page.url | relative_url }}"</span><span class="nt">&gt;</span>{{ my_page.title | escape }}<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+          {% endif %}
+        {% endunless %}{% endif %}
+      {% endfor %}
+      <span class="nt">&lt;/ul&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    {% endif %}
+  <span class="nt">&lt;/nav&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></figure>
+<blockquote>
+  <p>Simply add a title and permalink, and that page is now added to the navbar.</p>
+</blockquote>
+<p>This automatically skips paths such as images, stylesheets and blog posts without a permalink. Useful for adding new static pages like an “About” page, or a “Contact”, or a “Projects” page. On mobile, these links fold into a hamburger menu. Hurray responsiveness!</p>
+<h3 id="header">Header</h3>
+<p>Next on this list is the <code class="language-plaintext highlighter-rouge">header.html</code> include. This is an important one, since it’s usually the most eye-catching thing people see when they first load in. I opted for a large banner-like section in my college’s colors, and it’s where I put my title, subtitle and other informational tidbits like publication date.</p>
+<p>On the home page, it’s where my profile picture sits, alongside my name, college degree and (predicted) graduation year, as well as some important links (GitHub, LinkedIn and contact info). I plan to have my resumè in this section at some point in the future.</p>
+<p>So, let’s see some code:</p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">"site-header"</span> <span class="na">role=</span><span class="s">"banner"</span><span class="nt">&gt;</span>
+  {% if page.layout == 'home' %}
+
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"jumbotron jumbotron-fluid header header-home"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-12 col-md-4 col-lg-3 mb-3 mb-md-0"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;img</span> <span class="na">id=</span><span class="s">"profile"</span> <span class="na">src=</span><span class="s">"{{ site.baseurl }}/assets/images/profile.jpg"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-12 col-md-8 col-lg-9"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;h1&gt;</span>{{ site.title }}<span class="nt">&lt;/h1&gt;</span>
+          <span class="nt">&lt;h2&gt;</span>{{ site.subtitle }}<span class="nt">&lt;/h2&gt;</span>
+
+          <span class="c">&lt;!-- Action Buttons --&gt;</span>
+          <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"action list-inline banner-social-buttons"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"list-inline-item"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"btn btn-dark"</span> <span class="na">href=</span><span class="s">"mailto:me@lucasvienna.dev"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-envelope"</span><span class="nt">&gt;&lt;/i&gt;</span> Email
+              <span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"list-inline-item"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"btn btn-dark"</span> <span class="na">href=</span><span class="s">"{{ site.linkedin.url }}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-linkedin"</span><span class="nt">&gt;&lt;/i&gt;</span> LinkedIn
+              <span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"list-inline-item"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"btn btn-dark"</span> <span class="na">href=</span><span class="s">"{{ site.github.url }}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-github"</span><span class="nt">&gt;&lt;/i&gt;</span> GitHub
+              <span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+          <span class="nt">&lt;/ul&gt;</span>
+
+          {% if page.layout == 'home' and site.github.is_project_page and site.show_github %}
+          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ site.github.repository_url }}"</span> <span class="na">class=</span><span class="s">"btn"</span><span class="nt">&gt;</span>View on GitHub<span class="nt">&lt;/a&gt;</span>
+          {% if site.show_downloads %}
+          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ site.github.zip_url }}"</span> <span class="na">class=</span><span class="s">"btn"</span><span class="nt">&gt;</span>Download .zip<span class="nt">&lt;/a&gt;</span>
+          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ site.github.tar_url }}"</span> <span class="na">class=</span><span class="s">"btn"</span><span class="nt">&gt;</span>Download .tar.gz<span class="nt">&lt;/a&gt;</span>
+          {% endif %}
+          {% endif %}
+        <span class="nt">&lt;/div&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+
+  {% else %}
+
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"jumbotron jumbotron-fluid header header-page"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">"project-name"</span><span class="nt">&gt;</span>{{ page.title }}<span class="nt">&lt;/h1&gt;</span>
+      <span class="nt">&lt;h5</span> <span class="na">class=</span><span class="s">"project-tagline"</span><span class="nt">&gt;</span>{{ page.subtitle }}<span class="nt">&lt;/h5&gt;</span>
+
+      <span class="c">&lt;!-- Post tagline --&gt;</span>
+      {% if page.layout == 'post' %}
+      <span class="nt">&lt;h2</span> <span class="na">class=</span><span class="s">"project-date"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;time</span> <span class="na">datetime=</span><span class="s">"{{ page.date | date_to_xmlschema }}"</span> <span class="na">itemprop=</span><span class="s">"datePublished"</span><span class="nt">&gt;</span>
+          {% assign date_format = site.date_format | default: "%b %-d, %Y" %}
+          {{ page.date | date: date_format }}
+        <span class="nt">&lt;/time&gt;</span>
+      <span class="nt">&lt;/h2&gt;</span>
+      {% endif %}
+      <span class="c">&lt;!-- End: Post tagline --&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+
+  {% endif %}
+<span class="nt">&lt;/header&gt;</span></code></pre></figure>
+<p>At this point, you should be able to recognize what’s going on here. The include has a conditional that determines whether we’re in the home page or not, and adjusts accordingly. It also checks for a <code class="language-plaintext highlighter-rouge">post</code> layout to determine whether or not to add the post tagline. Both pages have a title and subtitle, although I use the global <code class="language-plaintext highlighter-rouge">site.title</code> in the home, whereas regular pages get <code class="language-plaintext highlighter-rouge">page.title</code>.</p>
+<p>The action buttons pull their URLs from your <code class="language-plaintext highlighter-rouge">_config.yml</code>, so make sure the information there is correct. It is done like this because these URLs are used in other parts of the site as well (spoiler: the footer).</p>
+<p>Like before, some CSS classes here are not part of Bootstrap, and instead come from my custom SCSS files (which I’ll cover in Part 3). You can ignore them for now, but do not remove them, since we’ll be using these classes later on.</p>
+<h3 id="footer">Footer</h3>
+<p>The last of our includes is the footer. It is a simple affair, with links to my GitHub page, my twitter (although I do not use it regularly) and my “About” page. Check out the code below:</p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;footer</span> <span class="na">class=</span><span class="s">"site-footer text-center"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div&gt;</span>
+    <span class="c">&lt;!-- SVG icons from https://iconmonstr.com --&gt;</span>
+    <span class="c">&lt;!-- Github icon --&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"footer-icon"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a</span>
+        <span class="na">href=</span><span class="s">"{{ site.github.url }}"</span>
+        <span class="na">title=</span><span class="s">"{{ site.github.username }}'s GitHub"</span>
+        <span class="na">aria-label=</span><span class="s">"{{ site.github.username }}'s GitHub"</span>
+      <span class="nt">&gt;</span>
+        <span class="nt">&lt;svg</span> <span class="na">class=</span><span class="s">"footer-svg-icon"</span> <span class="na">xmlns=</span><span class="s">"http://www.w3.org/2000/svg"</span> <span class="na">width=</span><span class="s">"24"</span> <span class="na">height=</span><span class="s">"24"</span> <span class="na">viewBox=</span><span class="s">"0 0 24 24"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/svg&gt;</span>
+      <span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/span&gt;</span>
+
+    <span class="c">&lt;!-- Twitter icon --&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"footer-icon"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a</span>
+        <span class="na">href=</span><span class="s">"{{ site.twitter.url }}"</span>
+        <span class="na">title=</span><span class="s">"{{ site.twitter.handle }}'s Twitter"</span>
+        <span class="na">aria-label=</span><span class="s">"{{ site.twitter.handle }}'s Twitter"</span>
+      <span class="nt">&gt;</span>
+        <span class="nt">&lt;svg</span> <span class="na">class=</span><span class="s">"footer-svg-icon"</span> <span class="na">xmlns=</span><span class="s">"http://www.w3.org/2000/svg"</span> <span class="na">width=</span><span class="s">"24"</span> <span class="na">height=</span><span class="s">"24"</span> <span class="na">viewBox=</span><span class="s">"0 0 24 24"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/svg&gt;</span>
+      <span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/span&gt;</span>
+
+    <span class="c">&lt;!-- Contact icon --&gt;</span>
+    {% assign about_page = site.pages | where: "name", "about.md" | first %}
+    {% if about_page.title %}
+    <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"footer-icon"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a</span>
+        <span class="na">href=</span><span class="s">"{{ about_page.url | relative_url }}"</span>
+        <span class="na">title=</span><span class="s">"Contact {{ site.owner }}"</span>
+        <span class="na">aria-label=</span><span class="s">"Contact"</span>
+      <span class="nt">&gt;</span>
+        <span class="nt">&lt;svg</span> <span class="na">class=</span><span class="s">"footer-svg-icon"</span> <span class="na">xmlns=</span><span class="s">"http://www.w3.org/2000/svg"</span> <span class="na">width=</span><span class="s">"24"</span> <span class="na">height=</span><span class="s">"24"</span> <span class="na">viewBox=</span><span class="s">"0 0 24 24"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/svg&gt;</span>
+      <span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/span&gt;</span>
+    {% endif %}
+  <span class="nt">&lt;/div&gt;</span>
+
+  <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"footer-credits"</span><span class="nt">&gt;</span>This page was generated by <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://pages.github.com"</span><span class="nt">&gt;</span>GitHub Pages<span class="nt">&lt;/a&gt;</span>.<span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"footer-owner"</span><span class="nt">&gt;</span><span class="ni">&amp;copy;</span> {{ site.owner }}, 2019<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/footer&gt;</span></code></pre></figure>
+<p>As you can see, a very simple snippet. We have three links with icons and two lines of text, one regarding GH Pages and the other saying who this website belongs to.</p>
+<h2 id="page-layout">Page Layout</h2>
+<p>With the includes done, we’re left with a few layouts before Jekyll will stop complaining about missing things. Let’s start with the <code class="language-plaintext highlighter-rouge">page</code> layout, as it is the simplest one.</p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html">---
+layout: default
+---
+<span class="nt">&lt;article&gt;</span>
+
+  <span class="nt">&lt;div&gt;</span>
+    {{ content }}
+  <span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;/article&gt;</span></code></pre></figure>
+<p>Yeah, that’s all. Just an article tag with content inside. Our regular pages are just that, regular.</p>
+<h2 id="post-layout">Post Layout</h2>
+<p>A more interesting layout, but still very simple. It lightly implements a <code class="language-plaintext highlighter-rouge">BlogPosting</code> schema by using the <code class="language-plaintext highlighter-rouge">articleBody</code> prop, and lays the groundwork for using Disqus, if you need comments in your posts.</p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html">---
+layout: default
+---
+<span class="nt">&lt;article</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"http://schema.org/BlogPosting"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;div</span> <span class="na">itemprop=</span><span class="s">"articleBody"</span><span class="nt">&gt;</span>
+    {{ content }}
+  <span class="nt">&lt;/div&gt;</span>
+
+  {% if site.disqus.shortname %}
+    {% include disqus_comments.html %}
+  {% endif %}
+<span class="nt">&lt;/article&gt;</span></code></pre></figure>
+<h2 id="home-layout">Home Layout</h2>
+<p>And the last layout, the home page. It really is more of the same, with a neat little post list.</p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html">---
+layout: default
+---
+
+<span class="nt">&lt;div&gt;</span>
+
+  {{ content }}
+
+  <span class="nt">&lt;h2&gt;</span>Latest Posts<span class="nt">&lt;/h2&gt;</span>
+
+  <span class="nt">&lt;div&gt;</span><span class="ni">&amp;nbsp;</span><span class="nt">&lt;/div&gt;</span>
+
+  <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"post-list"</span><span class="nt">&gt;</span>
+    {% for post in site.posts %}
+    <span class="nt">&lt;li&gt;</span>
+
+      {% assign date_format = site.date_format | default: "%b %-d, %Y" %}
+      <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"post-meta"</span><span class="nt">&gt;</span>{{ post.date | date: date_format }}<span class="nt">&lt;/span&gt;</span>
+
+      <span class="nt">&lt;h2&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"post-link"</span> <span class="na">href=</span><span class="s">"{{ post.url | relative_url }}"</span> <span class="na">title=</span><span class="s">"{{ post.title }}"</span><span class="nt">&gt;</span>{{ post.title | escape }}<span class="nt">&lt;/a&gt;</span>
+      <span class="nt">&lt;/h2&gt;</span>
+
+      <span class="nt">&lt;span&gt;</span>{{ post.excerpt | markdownify | truncatewords: 50 }}<span class="nt">&lt;/span&gt;</span>
+
+    <span class="nt">&lt;/li&gt;</span>
+    {% endfor %}
+  <span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;/div&gt;</span></code></pre></figure>
+<p>To take note here is the fact that this little list does not do pagination of content, meaning that if you have something like 300 posts, your home page will end up being veeeery long. Otherwise, it works very well for its purpose.</p>
+<p>At this point, your site should be looking something like this:</p>
+<p><img src="/assets/images/portfolio/demo-blog-bare.png" alt="Barebones Demo Blog" /></p>
+  </div>
+</article>
+      </section>
+    </div>
+    <footer class="site-footer text-center">
+  <div>
+    <span class="footer-icon">
+      <a
+        href="https://github.com/Avyiel"
+        title="Avyiel's GitHub"
+        aria-label="Avyiel's GitHub"
+      >
+        <svg class="footer-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+        </svg>
+      </a>
+    </span>
+    <span class="footer-icon">
+      <a
+        href="https://twitter.com/avyiel7"
+        title="Avyiel7's Twitter"
+        aria-label="Avyiel7's Twitter"
+      >
+        <svg class="footer-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z" />
+        </svg>
+      </a>
+    </span>
+    <span class="footer-icon">
+      <a
+        href="/about"
+        title="Contact Lucas Vienna"
+        aria-label="Contact"
+      >
+        <svg class="footer-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z" />
+        </svg>
+      </a>
+    </span>
+    <span class="footer-icon">
+      <a
+        rel="me"
+        href="https://mastodon.social/@lucasvienna"
+        title="Mastodon"
+        aria-label="Mastodon"
+      >
+        <svg class="footer-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M 15.9375 4.03125 C 12.917 4.0435 9.9179219 4.4269844 8.3574219 5.1464844 C 8.3574219 5.1464844 5 6.6748594 5 11.880859 C 5 18.077859 4.9955 25.860234 10.5625 27.365234 C 12.6945 27.938234 14.527953 28.061562 16.001953 27.976562 C 18.676953 27.825562 20 27.005859 20 27.005859 L 19.910156 25.029297 C 19.910156 25.029297 18.176297 25.640313 16.029297 25.570312 C 13.902297 25.495313 11.6615 25.335688 11.3125 22.679688 C 11.2805 22.432688 11.264625 22.182594 11.265625 21.933594 C 15.772625 23.052594 19.615828 22.420969 20.673828 22.292969 C 23.627828 21.933969 26.199344 20.081672 26.527344 18.388672 C 27.041344 15.720672 26.998047 11.880859 26.998047 11.880859 C 26.998047 6.6748594 23.646484 5.1464844 23.646484 5.1464844 C 22.000984 4.3779844 18.958 4.019 15.9375 4.03125 z M 12.705078 8.0019531 C 13.739953 8.0297031 14.762578 8.4927031 15.392578 9.4707031 L 16.001953 10.505859 L 16.609375 9.4707031 C 17.874375 7.5037031 20.709594 7.6264375 22.058594 9.1484375 C 23.302594 10.596438 23.025391 11.531 23.025391 18 L 23.025391 18.001953 L 20.578125 18.001953 L 20.578125 12.373047 C 20.578125 9.7380469 17.21875 9.6362812 17.21875 12.738281 L 17.21875 16 L 14.787109 16 L 14.787109 12.738281 C 14.787109 9.6362812 11.429688 9.7360938 11.429688 12.371094 L 11.429688 18 L 8.9765625 18 C 8.9765625 11.526 8.7043594 10.585438 9.9433594 9.1484375 C 10.622859 8.3824375 11.670203 7.9742031 12.705078 8.0019531 z"></path>
+        </svg>
+      </a>
+    </span>
+  </div>
+  <span class="footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+  <div class="footer-owner">&copy; Lucas Vienna, 2019</div>
+</footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
